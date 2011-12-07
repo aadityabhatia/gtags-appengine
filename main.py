@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from datetime import datetime
 from google.appengine.api import memcache, users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import util, template
 from google.appengine.ext.webapp.util import login_required
 from oauth2client.appengine import CredentialsProperty, StorageByKeyName
 from oauth2client.client import OAuth2WebServerFlow
-import httplib2
 import os
 import pickle
-import urllib
 
 FLOW = OAuth2WebServerFlow(
 		# Visit https://code.google.com/apis/console to
@@ -33,31 +30,15 @@ FLOW = OAuth2WebServerFlow(
 		scope='https://www.googleapis.com/auth/fusiontables',
 		user_agent='gtags/1.0')
 
-queryURL = "https://www.google.com/fusiontables/api/query?sql=%s"
-insertSQL = "INSERT INTO <TABLEID> (timestamp, responseX, responseY) VALUES ('%s', %s, %s)"
-
 memcacheClient = memcache.Client()
 
 class Credentials(db.Model):
 	credentials = CredentialsProperty()
 
-
 class MainHandler(webapp.RequestHandler):
-
-	@login_required
 	def get(self):
-		user = users.get_current_user()
-		credentials = StorageByKeyName(
-				Credentials, user.user_id(), 'credentials').get()
-
-		if credentials is None or credentials.invalid == True:
-			callback = self.request.relative_url('/oauth2callback')
-			authorize_url = FLOW.step1_get_authorize_url(callback)
-			memcacheClient.set("oauth-%s" % user.user_id(), pickle.dumps(FLOW))
-			self.redirect(authorize_url)
-		else:
-			path = os.path.join(os.path.dirname(__file__), 'input.html')
-			self.response.out.write(template.render(path, {}))
+		path = os.path.join(os.path.dirname(__file__), 'intro.html')
+		self.response.out.write(template.render(path, {}))
 
 class OAuthHandler(webapp.RequestHandler):
 
@@ -90,16 +71,12 @@ class SubmitHandler(webapp.RequestHandler):
 				Credentials, user.user_id(), 'credentials').get()
 
 		if credentials is None or credentials.invalid == True:
-			self.redirect("/")
+			self.response.set_status(403)
+			self.response.out.write("403 Not Authorized")
 		else:
-			http = httplib2.Http()
-			http = credentials.authorize(http)
-			x = self.request.get("x")
-			y = self.request.get("y")
-			url = insertSQL % (datetime.utcnow().isoformat(' ')[:19], x, y)
-			(response, content) = http.request(queryURL % urllib.quote(url), "POST")
-			self.response.set_status(response['status'])
-			self.response.out.write(content)
+			# TODO: process some data here
+			self.response.set_status(501)
+			self.response.out.write("501 Not implemented")
 
 def main():
 	application = webapp.WSGIApplication(
