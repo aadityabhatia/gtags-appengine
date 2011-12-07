@@ -70,20 +70,9 @@ class Credentials(db.Model):
 
 class MainHandler(webapp.RequestHandler):
 
-    @login_required
     def get(self):
-        user = users.get_current_user()
-        credentials = StorageByKeyName(
-                Credentials, user.user_id(), 'credentials').get()
-
-        if credentials is None or credentials.invalid == True:
-            callback = self.request.relative_url('/oauth2callback')
-            authorize_url = FLOW.step1_get_authorize_url(callback)
-            memcacheClient.set("oauth-%s" % user.user_id(), pickle.dumps(FLOW))
-            self.redirect(authorize_url)
-        else:
-            path = os.path.join(os.path.dirname(__file__), 'input.html')
-            self.response.out.write(template.render(path, {}))
+        path = os.path.join(os.path.dirname(__file__), 'intro.html')
+        self.response.out.write(template.render(path, {}))
 
 class OAuthHandler(webapp.RequestHandler):
 
@@ -102,6 +91,7 @@ class OAuthHandler(webapp.RequestHandler):
 class ViewHandler(webapp.RequestHandler):
     
     def get(self):
+        import logging
         nick = 'wiki'
         email = 'wiki@gta.gs'
         password = 'w1k1w1k1'
@@ -123,10 +113,11 @@ class ViewHandler(webapp.RequestHandler):
             feed = self.client.GetListFeed(self.spreadsheetId, worksheetId)
             results = []
             for entry in feed.entry:
-                results.append(([[(v.column, v.text)]] for v in entry.custom.values()))
-            self.response.out.write(results)
-            #path = os.path.join(os.path.dirname(__file__), 'view.html')
-            #self.response.out.write(template.render(path, {results:feed.entry}))
+                logging.info(len(feed.entry))
+                results.append((dict((v.column, v.text) for v in entry.custom.values())))
+            #self.response.out.write(results)
+            path = os.path.join(os.path.dirname(__file__), 'view.html')
+            self.response.out.write(template.render(path, {'results':results}))
 
 class SubmitHandler(webapp.RequestHandler):
 

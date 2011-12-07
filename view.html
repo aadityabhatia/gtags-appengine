@@ -511,6 +511,9 @@ ul {
 		<div class="main">
 			<div id="topMessage" class="error box gray"></div>
 			<div class="content" id="content">
+				{% for result in results %}
+				<div><a href='{{result.posts}}'>{{result.title}}</a></div>
+{% endfor %}
 				<div class="column left devices">
 					<div class="device iphone">
 						<div class="rotator">
