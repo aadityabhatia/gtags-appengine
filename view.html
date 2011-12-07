@@ -486,16 +486,13 @@ ul {
 	width: 180px;
 }
 </style>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<body>
 <br>
 <div class="H1">
-	<div class="header" id="header" style="text-align: center;">
-		gTags: Google+ Gather Page App
-	</div>
+	<div class="header" id="header" style="text-align: center;">gTags: Google+ Gather Page App</div>
 </div>
 </head>
-<body>
+
 	<div class="root">
 		<div class="header" id="header">
 			<a class="logo" href="/"></a>
@@ -512,71 +509,13 @@ ul {
 			<div id="topMessage" class="error box gray"></div>
 			<div class="content" id="content">
 				{% for result in results %}
-				<div><a href='{{result.posts}}'>{{result.title}}</a></div>
-{% endfor %}
-				<div class="column left devices">
-					<div class="device iphone">
-						<div class="rotator">
-							<ul>
-								<li class="show"><img src="/static/img/demo/ios-1-home.png" width="227" height="341"
-									alt="pic1" /></li>
-								<li><img src="/static/img/demo/ios-2-contacts.png" width="227" height="341" alt="pic2" />
-								</li>
-								<li><img src="/static/img/demo/ios-3-select.png" width="227" height="341" alt="pic3" />
-								</li>
-								<li><img src="/static/img/demo/ios-4-profile.png" width="227" height="341" alt="pic4" />
-								</li>
-								<li><img src="/static/img/demo/ios-6-scan.png" width="227" height="341" alt="pic6" />
-								</li>
-								<li><img src="/static/img/demo/ios-7-confirm-pay.png" width="227" height="341"
-									alt="pic7" /></li>
-								<li><img src="/static/img/demo/ios-8-profile-toast.png" width="227" height="341"
-									alt="pic8" /></li>
-							</ul>
-						</div>
-						<div class="frame"></div>
-					</div>
-					<div class="device android">
-						<div class="rotator">
-							<ul>
-								<li class="show"><img src="/static/img/demo/android-1-home.png" width="225"
-									height="375" alt="pic1" /></li>
-								<li><img src="/static/img/demo/android-2a-home-toast.png" width="225" height="375"
-									alt="pic2" /></li>
-								<li><img src="/static/img/demo/android-3-select.png" width="225" height="375"
-									alt="pic4" /></li>
-								<li><img src="/static/img/demo/android-4-scan.png" width="225" height="375" alt="pic5" />
-								</li>
-								<li><img src="/static/img/demo/android-5-home-final.png" width="225" height="375"
-									alt="pic6" /></li>
-							</ul>
-						</div>
-						<div class="frame"></div>
-					</div>
-					<div id="replay" class="hidden">
-						<img src="/static/img/demo/replay.png">
-					</div>
+				<div>
+					<a href='{{result.posts}}' target="_blank">{{result.title}}</a>
 				</div>
-				<div class="column right">
-
-					<div class="info">
-						<ul>
-
-						</ul>
-						<p></p>
-						<div class="">
-
-							<div class="inputs"></div>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
-			<div class="white">h</div>
-			<div style="clear: both;"></div>
 		</div>
-	</div>
-	<div class="footer" style="text-align: center;">
-		gTags was created at Google Apps Hackathon at the Googleplex - December 2011
-	</div>
+		<div class="footer" style="text-align: center;">gTags was created at Google Apps Hackathon
+			at the Googleplex - December 2011</div>
 </body>
 </html>
