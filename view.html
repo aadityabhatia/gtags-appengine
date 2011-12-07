@@ -1,11 +1,579 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>Google+ Tags</title>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<title>gTags</title>
+<style type="text/css">
+html,body {
+	margin: 0;
+}
+
+body {
+	background: #efefef url("/static/img/main_bg.png");
+}
+
+a,.link {
+	text-decoration: none;
+	color: #337c33;
+}
+
+a img {
+	border: none;
+}
+
+strong {
+	font-weight: 600;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+ul li {
+	margin-bottom: 5px;
+}
+
+h1 {
+	color: #110;
+	visibility: hidden;
+	font-family: Lobster, cursive;
+	text-shadow: #666 0 1px 1px;
+	font-size: 55px;
+	font-weight: bold;
+	margin: 10px 0 30px 0;
+	line-height: 30px;
+}
+
+.fontsLoaded h1 {
+	visibility: visible;
+}
+
+.cols {
+	overflow: hidden;
+}
+
+.column {
+	width: 450px;
+}
+
+.mobile .column {
+	width: auto;
+}
+
+.column.left {
+	float: left;
+}
+
+.column.right {
+	float: right;
+}
+
+.mobile .column.right {
+	float: left;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.Button {
+	display: inline-block;
+	cursor: pointer;
+	padding: 3px 10px 4px;
+	background: #eee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#bbb) );
+	background: -moz-linear-gradient(top, #eee, #bbb);
+	border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	-moz-border-radius: 2px 2px 2px 2px;
+	font-size: 14px;
+	border: 1px solid #a5a5a5;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	box-shadow: #ccc 0 2px 1px;
+	-webkit-box-shadow: #ccc 0 2px 1px;
+	-moz-box-shadow: #ccc 0 2px 1px;
+	border-color: #a5a5a5;
+	transition: border-color 0.4s;
+	-moz-transition: border-color 0.4s;
+	-webkit-transition: border-color 0.4s;
+	-o-transition: border-color 0.4s;
+}
+
+.Button:hover {
+	border-color: #ccc;
+	transition: border-color 0.4s;
+	-moz-transition: border-color 0.4s;
+	-webkit-transition: border-color 0.4s;
+	-o-transition: border-color 0.4s;
+}
+
+.Button:active {
+	background: #ddd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#dfdfdf) );
+	background: -moz-linear-gradient(top, #ddd, #dfdfdf);
+}
+
+.Button.disabled {
+	color: #999;
+	cursor: default;
+	box-shadow: rgba(0, 0, 0, 0.50) none 1px 2px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.50) none 1px 2px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.50) none 1px 2px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	border-color: #a5a5a5;
+	transition: border-color 0.4s;
+	-moz-transition: border-color 0.4s;
+	-webkit-transition: border-color 0.4s;
+	-o-transition: border-color 0.4s;
+	background: #eee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#bbb) );
+	background: -moz-linear-gradient(top, #eee, #bbb);
+}
+
+.mobile .root {
+	width: auto;
+	margin: 0 10px;
+}
+
+.mobile .root .main {
+	padding: 15px;
+}
+
+.mobile .root .content {
+	clear: both;
+}
+
+.mobile .root .header .links {
+	margin: 5px;
+	width: 200px;
+	text-align: right;
+}
+
+.mobile .root .header .links a {
+	margin: 0 0 0 5px;
+}
+
+.mobile .root .header .links #loginButton {
+	display: none;
+}
+
+.root {
+	width: 980px;
+	margin: 0 auto;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	font-weight: 200;
+	color: #333;
+	line-height: 1.3em;
+}
+
+.root .header {
+	position: relative;
+	height: 50px;
+}
+
+.root .header .logo {
+	width: 127px;
+	height: 34px;
+	background: transparent 0 0 no-repeat;
+	background-image: url("/static/img/logo_127x34.png");
+	display: inline-block;
+	margin: 8px 0;
+	float: left;
+}
+
+.root .header .links {
+	float: right;
+	margin: 14px 0 0 0;
+}
+
+.root .header .links a {
+	margin: 0 0 0 25px;
+	font-weight: 200;
+}
+
+.root .header .links #loginButton {
+	margin: 0 0 0 15px;
+	display: none;
+}
+
+.root .footer {
+	margin-bottom: 30px;
+}
+
+.root .footer a {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.root .main {
+	box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	background: #fff;
+	margin: 0 0 10px 0;
+	padding: 25px;
+}
+
+.root .main .content {
+	position: relative;
+}
+
+.root .main .content .subtitle {
+	margin: 0 0 10px 0;
+}
+
+.root .main .content .small {
+	font-size: 0.9em;
+}
+
+.box {
+	padding: 10px;
+	border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	text-align: center;
+	margin: 0 0 30px 0;
+}
+
+.box h2 {
+	font-size: 26px;
+	font-weight: 200;
+	margin: 5px 0px;
+	text-shadow: 0px 1px #fff;
+}
+
+.box p {
+	font-size: 18px;
+	margin: 20px 0px 10px;
+	line-height: 22px;
+}
+
+.box .small {
+	text-align: left;
+	margin-left: 10px;
+}
+
+.mobile .box {
+	padding: 10px 5px;
+}
+
+.mobile .box h2 {
+	font-size: 24px;
+}
+
+.box.green {
+	background: #b6e3b6;
+}
+
+.box.gray {
+	background: #eee2f0;
+}
+
+.box.error,.box .error {
+	color: #ab008c;
+}
+
+#topMessage {
+	display: none;
+}
+
+.content {
+	position: relative;
+}
+
+ul {
+	margin-left: -20px;
+}
+
+.hidden {
+	display: none;
+}
+
+.devices {
+	height: 670px;
+}
+
+.devices .device {
+	border: 0px;
+	display: none;
+}
+
+.devices .device.iphone {
+	position: absolute;
+	left: 25px;
+	top: 90px;
+	z-index: 10;
+}
+
+.devices .device.iphone .rotator {
+	position: absolute;
+	height: 341px;
+	left: 4px;
+	top: 81px;
+}
+
+.devices .device.iphone .rotator ul li {
+	float: left;
+	position: absolute;
+	list-style: none;
+}
+
+.devices .device.iphone .rotator ul li.show {
+	z-index: 500;
+}
+
+.devices .device.iphone .frame {
+	width: 273px;
+	height: 600px;
+	background: url("/static/img/iphone.png");
+	border: 0px !important;
+}
+
+.devices .device.android {
+	position: absolute;
+	left: 195px;
+	top: 30px;
+	z-index: 0;
+}
+
+.devices .device.android .rotator {
+	position: absolute;
+	height: 375;
+	left: 5px;
+	top: 50px;
+}
+
+.devices .device.android .rotator ul li {
+	float: left;
+	position: absolute;
+	list-style: none;
+}
+
+.devices .device.android .rotator ul li.show {
+	z-index: 500;
+}
+
+.devices .device.android .frame {
+	width: 276px;
+	height: 581px;
+	background: url("/static/img/android.png");
+	border: 0px !important;
+}
+
+.devices #replay {
+	position: absolute;
+	left: 225px;
+	bottom: 0px;
+	cursor: pointer;
+	width: 48px;
+	height: 48px;
+	z-index: 500;
+}
+
+.right {
+	margin: 20px 0 0 0;
+}
+
+.mobile .right {
+	margin: 0;
+}
+
+.white {
+	position: absolute;
+	bottom: 0px;
+	right: 20px;
+	background: #fff;
+	text-align: right;
+}
+
+.white .action {
+	display: inline-block;
+	margin: 15px 0 0 10px;
+}
+
+.white .action img {
+	height: 40px;
+}
+
+.mobile .white {
+	position: static;
+}
+
+.mobile .white .action {
+	margin: 0 7px 0 4px;
+}
+
+.qr-code {
+	border: 1px solid #000;
+	box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.50) 2px 0 10px;
+	margin: 10px 0px;
+}
+
+.waitlist #waitlistInput {
+	padding: 10px;
+	width: 260px;
+	margin: 10px 5px 10px 0px;
+	font-size: 16px;
+}
+
+.waitlist button {
+	padding: 10px 25px;
+	font-size: 15px;
+	cursor: pointer;
+	border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	-moz-border-radius: 2px 2px 2px 2px;
+	display: inline-block;
+	background: #61bf25;
+	background: -webkit-gradient(linear, left top, left bottom, from(#61bf25), to(#409d03) );
+	background: -moz-linear-gradient(top, #61bf25, #409d03);
+	border: 1px solid #599238;
+	color: #fff;
+	font-weight: bold;
+	text-shadow: #1f601c 1px 1px 0;
+}
+
+.waitlist button:hover,.waitlist .button:hover {
+	background: #50ae14;
+	background: -webkit-gradient(linear, left top, left bottom, from(#50ae14), to(#327c02) );
+	background: -moz-linear-gradient(top, #50ae14, #327c02);
+}
+
+.waitlist button:active,.waitlist .button:active {
+	background: #327c02;
+	background: -webkit-gradient(linear, left top, left bottom, from(#327c02), to(#50ae14) );
+	background: -moz-linear-gradient(top, #327c02, #50ae14);
+}
+
+.waitlist #waitlistButton:hover {
+	border-color: #bbb;
+	transition: border-color 0.4s;
+	-moz-transition: border-color 0.4s;
+	-webkit-transition: border-color 0.4s;
+	-o-transition: border-color 0.4s;
+}
+
+.waitlist #waitlistOutput {
+	visibility: hidden;
+	height: 20px;
+	font-size: 16px;
+	margin: 5px 0;
+}
+
+.waitlist #waitlistOutput .error {
+	color: #ab008c;
+}
+
+.waitlist #waitlistOutput .success {
+	color: #363;
+}
+
+.mobile #waitlistInput {
+	width: 180px;
+}
+</style>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<br>
+<div class="H1">
+	<div class="header" id="header" style="text-align: center;">
+		gTags: Google+ Gather Page App
+	</div>
+</div>
 </head>
-<body style="border: 0 none;">
-	<h1>Landing page goes here.</h1>
+<body>
+	<div class="root">
+		<div class="header" id="header">
+			<a class="logo" href="/"></a>
+			<div class="links">
+				<!--
+				<a href="/">Home</a>
+				<a href="/store">Store</a>
+				<a href="/developers">Developers</a>
+				-->
+				<div class="Button" id="loginButton">Sign In</div>
+			</div>
+		</div>
+		<div class="main">
+			<div id="topMessage" class="error box gray"></div>
+			<div class="content" id="content">
+				<div class="column left devices">
+					<div class="device iphone">
+						<div class="rotator">
+							<ul>
+								<li class="show"><img src="/static/img/demo/ios-1-home.png" width="227" height="341"
+									alt="pic1" /></li>
+								<li><img src="/static/img/demo/ios-2-contacts.png" width="227" height="341" alt="pic2" />
+								</li>
+								<li><img src="/static/img/demo/ios-3-select.png" width="227" height="341" alt="pic3" />
+								</li>
+								<li><img src="/static/img/demo/ios-4-profile.png" width="227" height="341" alt="pic4" />
+								</li>
+								<li><img src="/static/img/demo/ios-6-scan.png" width="227" height="341" alt="pic6" />
+								</li>
+								<li><img src="/static/img/demo/ios-7-confirm-pay.png" width="227" height="341"
+									alt="pic7" /></li>
+								<li><img src="/static/img/demo/ios-8-profile-toast.png" width="227" height="341"
+									alt="pic8" /></li>
+							</ul>
+						</div>
+						<div class="frame"></div>
+					</div>
+					<div class="device android">
+						<div class="rotator">
+							<ul>
+								<li class="show"><img src="/static/img/demo/android-1-home.png" width="225"
+									height="375" alt="pic1" /></li>
+								<li><img src="/static/img/demo/android-2a-home-toast.png" width="225" height="375"
+									alt="pic2" /></li>
+								<li><img src="/static/img/demo/android-3-select.png" width="225" height="375"
+									alt="pic4" /></li>
+								<li><img src="/static/img/demo/android-4-scan.png" width="225" height="375" alt="pic5" />
+								</li>
+								<li><img src="/static/img/demo/android-5-home-final.png" width="225" height="375"
+									alt="pic6" /></li>
+							</ul>
+						</div>
+						<div class="frame"></div>
+					</div>
+					<div id="replay" class="hidden">
+						<img src="/static/img/demo/replay.png">
+					</div>
+				</div>
+				<div class="column right">
+
+					<div class="info">
+						<ul>
+
+						</ul>
+						<p></p>
+						<div class="">
+
+							<div class="inputs"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="white">h</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div class="footer" style="text-align: center;">
+		gTags was created at Google Apps Hackathon at the Googleplex - December 2011
+	</div>
 </body>
 </html>
