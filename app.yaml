@@ -1,0 +1,12 @@
+application: gplustags
+version: dev
+runtime: python
+api_version: 1
+
+handlers:
+- url: /(.*\.(js|css|ico))
+  static_files: \1
+  upload: (.*\.(js|css|ico))
+
+- url: /.*
+  script: main.py
